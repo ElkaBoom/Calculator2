@@ -9,6 +9,7 @@ public class Main {
     private static final Map<String, Integer> ARABIAN = new HashMap<>();
     private final static TreeMap<Integer, String> ROMAN_RESULT = new TreeMap<>();
 
+
     static {
         ROME.put("I", 1);
         ROME.put("II", 2);
@@ -85,8 +86,8 @@ public class Main {
             default -> throw new RuntimeException();
         }
         if (isRoman) {
-            if (result < 0) {
-                throw new RuntimeException("Operation with arabic numbers cant have negative result");
+            if (result <= 0) {
+                throw new RuntimeException("Operation with Roman numbers cannot have a negative result");
             }
             return toRoman(result);
         }
