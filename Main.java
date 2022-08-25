@@ -2,9 +2,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
     private static final String REGEX = "[+\\-*/]";
+    private static final Pattern PATTERN = Pattern.compile(REGEX);
     private static final Map<String, Integer> ROME = new HashMap<>();
     private static final Map<String, Integer> ARABIAN = new HashMap<>();
     private final static TreeMap<Integer, String> ROMAN_RESULT = new TreeMap<>();
@@ -74,17 +77,23 @@ public class Main {
         if (rightOperand == null || leftOperand == null) {
             throw new RuntimeException("Wrong operands in input string");
         }
+        Matcher matcher = PATTERN.matcher(input);
+        if (!matcher.find()) {
+            throw new RuntimeException("incorrect arithmetic action");
+        }
+        String operator = matcher.group();
 
-        char operator = input.charAt(input.indexOf(numbers[0]) + 1);
 
         int result;
         switch (operator) {
-            case '+' -> result = leftOperand + rightOperand;
-            case '-' -> result = leftOperand - rightOperand;
-            case '*' -> result = leftOperand * rightOperand;
-            case '/' -> result = leftOperand / rightOperand;
+            case "+" -> result = leftOperand + rightOperand;
+            case "-" -> result = leftOperand - rightOperand;
+            case "*" -> result = leftOperand * rightOperand;
+            case "/" -> result = leftOperand / rightOperand;
             default -> throw new RuntimeException();
+
         }
+
         if (isRoman) {
             if (result <= 0) {
                 throw new RuntimeException("Operation with Roman numbers cannot have a negative result");
